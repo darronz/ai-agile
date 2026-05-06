@@ -1,0 +1,141 @@
+# Team Configuration
+# This file defines how your team works. The AI reads it at every phase
+# and adapts its behaviour accordingly. Edit it to match your reality.
+
+# ─────────────────────────────────────────────────────────────────────
+# Development methodology
+# ─────────────────────────────────────────────────────────────────────
+methodology: tdd
+# Options:
+#   tdd       - Tests first. Agent writes failing test, then implementation,
+#               then refactors. Review checks test coverage for every change.
+#   bdd       - Behaviour-driven. Grooming produces Given/When/Then scenarios.
+#               Execute implements against scenarios. Validate runs them.
+#   standard  - No enforced test-first workflow. Tests are still expected
+#               but the ordering isn't constrained.
+
+# ─────────────────────────────────────────────────────────────────────
+# Branching strategy
+# ─────────────────────────────────────────────────────────────────────
+branching: trunk-based
+# Options:
+#   trunk-based  - Short-lived feature branches off main. Small PRs.
+#                  Feature flags for incomplete work. Agent keeps changes
+#                  small and independently deployable.
+#   gitflow      - Feature branches off develop. Release branches.
+#                  Hotfix branches off main. Agent understands the model
+#                  and targets the correct base branch.
+#   simple       - Feature branches off main. No develop branch.
+#                  Suitable for smaller teams or projects.
+
+main_branch: main
+# The protected branch name. Agent never commits directly here.
+
+# ─────────────────────────────────────────────────────────────────────
+# PR and review policy
+# ─────────────────────────────────────────────────────────────────────
+pr_size: small
+# Options:
+#   small   - Prefer multiple small PRs over one large one. Agent breaks
+#             work into independently mergeable slices during planning.
+#   normal  - One PR per ticket. No artificial splitting.
+
+review_required: 1
+# Minimum number of human approvals before merge.
+
+require_ai_self_review: true
+# If true, /team-review must pass before raising a PR.
+
+# ─────────────────────────────────────────────────────────────────────
+# Commit conventions
+# ─────────────────────────────────────────────────────────────────────
+commit_convention: conventional
+# Options:
+#   conventional  - feat: / fix: / chore: / docs: / refactor: / test:
+#   simple        - No enforced prefix. Descriptive messages required.
+
+ai_commit_prefix: true
+# If true, agent-authored commits include [ai] in the commit body
+# (not the subject line) for audit trail purposes.
+
+# ─────────────────────────────────────────────────────────────────────
+# Quality gates between phases
+# ─────────────────────────────────────────────────────────────────────
+gates:
+  research_to_plan: auto
+  # auto   - Developer reviews research output, proceeds when satisfied.
+  # review - Research summary must be shared with team lead before planning.
+
+  plan_to_execute: auto
+  # auto   - Developer approves their own plan.
+  # review - Plan must be reviewed by another developer or tech lead.
+  #          Recommended for high-risk tickets (agent flags these).
+
+  execute_to_review: automated
+  # automated - Tests pass and linter passes before self-review runs.
+  #             This gate is always enforced regardless of setting.
+
+  review_to_merge: human
+  # human - Always requires human PR approval. Non-negotiable.
+  #         This setting cannot be changed to 'auto'.
+
+# ─────────────────────────────────────────────────────────────────────
+# Test and quality configuration
+# ─────────────────────────────────────────────────────────────────────
+test_framework: vitest           # or jest, pytest, go test, rspec, etc.
+e2e_framework: playwright        # or cypress, selenium, none
+coverage_threshold: 80           # Minimum % coverage for new code
+lint_command: "npm run lint"     # Command the agent runs to check style
+type_check_command: "npm run typecheck"  # Leave empty if not applicable
+
+# ─────────────────────────────────────────────────────────────────────
+# Dependency policy
+# ─────────────────────────────────────────────────────────────────────
+dependency_policy: flag
+# Options:
+#   open  - Agent can add dependencies freely.
+#   flag  - Agent must flag new dependencies in the PR description
+#           and explain why they're needed.
+#   lock  - Agent cannot add new dependencies without explicit developer
+#           approval during the session.
+
+# ─────────────────────────────────────────────────────────────────────
+# Documentation requirements
+# ─────────────────────────────────────────────────────────────────────
+docs:
+  update_readme: when_relevant    # always / when_relevant / never
+  api_docs: required              # required / optional / none
+  changelog: per_pr               # per_pr / per_release / none
+  adr: when_architectural         # Record architecture decision records
+                                  # when changes affect system architecture
+
+# ─────────────────────────────────────────────────────────────────────
+# Feature flags
+# ─────────────────────────────────────────────────────────────────────
+feature_flags: true
+# If true and branching is trunk-based, agent wraps incomplete
+# features behind flags. Specify your flag system below.
+flag_system: environment          # environment / launchdarkly / custom
+
+# ─────────────────────────────────────────────────────────────────────
+# Protected paths
+# ─────────────────────────────────────────────────────────────────────
+# Files the agent should never modify without explicit developer approval
+# during the session. These are checked in /team-review.
+protected_paths:
+  - ".github/"
+  - ".team/config.yaml"
+  - "CLAUDE.md"
+  - "docker-compose*.yml"
+  - "Dockerfile*"
+  - ".env*"
+  - "package-lock.json"       # Indirect changes via dependency adds are OK
+  - "infrastructure/"
+
+# ─────────────────────────────────────────────────────────────────────
+# Performance and accessibility (if applicable)
+# ─────────────────────────────────────────────────────────────────────
+# frontend:
+#   bundle_budget_kb: 250
+#   lighthouse_min: 90
+#   wcag_level: AA

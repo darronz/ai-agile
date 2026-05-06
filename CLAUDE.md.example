@@ -1,0 +1,94 @@
+# CLAUDE.md
+
+> This file is read by AI agents at the start of every session. It is the single source of truth
+> for how code is written in this project. Keep it accurate, keep it current, review changes in PRs.
+
+## Project
+
+<!-- What is this project? One paragraph. -->
+
+## Architecture
+
+<!-- High-level architecture. Services, data flow, key modules. Enough for someone (or an AI)
+     to understand where things live and why. -->
+
+### Key directories
+
+```
+src/
+├── api/          # REST API routes
+├── services/     # Business logic
+├── models/       # Data models and database
+├── middleware/    # Express middleware (auth, logging, error handling)
+├── utils/        # Shared utilities
+└── types/        # TypeScript type definitions
+```
+
+### Data flow
+
+<!-- How does a request flow through the system? Which layers does it touch? -->
+
+### External services
+
+<!-- APIs, databases, queues, third-party services. What do we depend on? -->
+
+## Coding standards
+
+### Language and runtime
+
+- TypeScript with strict mode
+- Node.js >= 20
+- ESM modules
+
+### Patterns we follow
+
+<!-- List the patterns the team has agreed on. Be specific. -->
+
+- Repository pattern for data access
+- Service layer for business logic (services never import from api/)
+- Dependency injection via constructor parameters, not global imports
+- Error handling: custom error classes extending AppError, caught by error middleware
+- Logging: structured JSON via pino, never console.log in production code
+
+### Patterns we avoid
+
+<!-- Equally important — what should the AI NOT do? -->
+
+- No classes where functions will do
+- No ORMs — we use raw SQL with parameterised queries
+- No barrel exports (index.ts re-exports)
+- No `any` type — use `unknown` and narrow
+- No default exports (except where required by framework)
+
+### Naming conventions
+
+- Files: kebab-case (`user-service.ts`)
+- Functions/variables: camelCase
+- Types/interfaces: PascalCase
+- Constants: UPPER_SNAKE_CASE
+- Database tables: snake_case
+- API endpoints: kebab-case (`/api/user-settings`)
+
+### Testing
+
+- Unit tests: colocated (`user-service.test.ts` next to `user-service.ts`)
+- Integration tests: `tests/integration/`
+- E2E tests: `tests/e2e/`
+- Test naming: `should <expected behaviour> when <condition>`
+- Prefer testing behaviour over implementation details
+- No mocking of internal modules — only external boundaries (DB, APIs, time)
+
+## Domain concepts
+
+<!-- Key domain terms and what they mean in this project. This helps the AI
+     use the right language and understand the business logic. -->
+
+## Known gotchas
+
+<!-- Things that have bitten the team before. The AI should know about these. -->
+
+## Team workflow
+
+This project uses the Team SDLC skill. See `.team/config.yaml` for methodology settings and `.team/CONVENTIONS.md` for PR and commit conventions.
+
+Branch policy: feature branches off `main`. No direct commits to `main`. PRs require review and CI checks.
