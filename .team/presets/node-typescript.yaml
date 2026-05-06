@@ -1,0 +1,16 @@
+# Node.js + TypeScript defaults
+# These values are used when config.yaml has: preset: node-typescript
+# Override any value by setting it directly in config.yaml.
+
+test_framework: vitest
+test_command: "npm test"
+e2e_framework: playwright
+coverage_threshold: 80
+lint_command: "npm run lint"
+type_check_command: "npm run typecheck"
+
+protected_paths:
+  - "package-lock.json"
+  - ".env*"
+  - "Dockerfile*"
+  - "docker-compose*.yml"

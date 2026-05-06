@@ -4,6 +4,14 @@ Research a ticket thoroughly before any planning or implementation begins. This 
 
 ### Instructions
 
+### Preset resolution
+
+Read `.team/config.yaml`. If a `preset` field is set, load `.team/presets/<preset>.yaml` and merge its values as defaults — any value explicitly set in `config.yaml` overrides the preset. Use the resolved config for all tooling references (test commands, lint commands, etc.) throughout this command.
+
+### Work directory
+
+Create `.team/work/<ticket-id>/` if it does not exist.
+
 Read the project context:
 - `CLAUDE.md` for architecture and coding standards
 - `.team/config.yaml` for methodology
@@ -36,7 +44,19 @@ Then research the ticket from multiple angles:
 
 ### Output
 
-Produce a research summary as a markdown file saved to the developer's local working directory. Do not commit this file.
+Save the research summary to `.team/work/<ticket-id>/research.md`.
+
+The file must begin with this frontmatter:
+
+```
+---
+ticket: <ticket-id>
+phase: research
+date: <YYYY-MM-DD>
+author: <developer>
+preset: <preset value from config, or "none">
+---
+```
 
 ```
 # Research: <ticket-id> — <ticket-title>
@@ -65,6 +85,6 @@ Does it need more refinement before it's ready for a sprint?>
 
 ### Important
 
-This phase produces information, not code. Do not write any implementation code. Do not create branches. Do not modify any project files. Research is read-only.
+This phase produces information, not code. Do not write any implementation code. Do not create branches. Do not modify any project source files. Research is read-only except for writing the research summary to `.team/work/<ticket-id>/research.md`.
 
 The output is designed to be shared with the team — in refinement, standup, or async in the team's communication channel. It's the basis for better grooming.

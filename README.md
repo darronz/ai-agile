@@ -20,10 +20,23 @@ The principles:
 your-repo/
 ├── CLAUDE.md                          # Agent behaviour, coding standards, architecture
 ├── .team/
-│   ├── config.yaml                    # Methodology, branching, quality gates
+│   ├── config.yaml                    # Methodology, branching, quality gates, preset
 │   ├── CONVENTIONS.md                 # PR templates, commit format, review checklist
 │   ├── BACKLOG.md                     # Or MCP connector to your tracker
-│   └── SPRINT.md                      # Current sprint scope and assignments
+│   ├── SPRINT.md                      # Current sprint scope and assignments
+│   ├── presets/                       # Stack-specific tooling defaults
+│   │   ├── node-typescript.yaml
+│   │   ├── python.yaml
+│   │   ├── go.yaml
+│   │   └── README.md
+│   └── work/                          # Created by commands — committed to git
+│       └── <ticket-id>/
+│           ├── research.md
+│           ├── grooming.md
+│           ├── plan.md
+│           ├── review.md
+│           ├── validation.md
+│           └── findings.md
 ├── .claude/
 │   └── commands/
 │       ├── team-research.md           # /team-research <ticket>
@@ -41,9 +54,9 @@ your-repo/
 
 ## Quick start
 
-1. Copy the `.team/`, `.claude/commands/`, and `.github/` directories into your repo root.
-2. Write your `CLAUDE.md` — coding standards, architecture decisions, domain concepts.
-3. Edit `.team/config.yaml` to match your team's methodology.
+1. Copy `.team/`, `.claude/`, and `.github/` into your repo root. (See `manifest.yaml` for which files need customization vs. which work as-is.)
+2. Edit `.team/config.yaml` — set the `preset` for your tech stack, then configure methodology, branching, and review policy.
+3. Write your `CLAUDE.md` using `CLAUDE.md.example` as a starting point — coding standards, architecture decisions, domain concepts.
 4. Run `/team-setup` to audit your repo configuration against recommended guardrails.
 5. Each developer works in their branch. Each developer uses whichever AI tool they prefer. The shared context keeps output consistent.
 

@@ -91,4 +91,8 @@ src/
 
 This project uses the Team SDLC skill. See `.team/config.yaml` for methodology settings and `.team/CONVENTIONS.md` for PR and commit conventions.
 
+Stack preset: `<preset>` — see `.team/presets/` for tooling defaults.
+
 Branch policy: feature branches off `main`. No direct commits to `main`. PRs require review and CI checks.
+
+Work artifacts (research, grooming, plans, reviews) are stored in `.team/work/<ticket-id>/` and committed to git for traceability.

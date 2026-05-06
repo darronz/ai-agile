@@ -8,6 +8,24 @@ Create an implementation plan for an assigned ticket. This happens in the develo
 - The developer has created or is on their feature branch
 - Branch name follows the convention in `.team/CONVENTIONS.md`
 
+### Preset resolution
+
+Read `.team/config.yaml`. If a `preset` field is set, load `.team/presets/<preset>.yaml` and merge its values as defaults — any value explicitly set in `config.yaml` overrides the preset. Use the resolved config for all tooling references throughout this command.
+
+### Prerequisite check
+
+Check for `.team/work/<ticket-id>/grooming.md`:
+- If it exists: read it for acceptance criteria, complexity assessment, and size recommendation.
+- If it does NOT exist: **STOP.** Tell the developer: "No groomed ticket found at `.team/work/<ticket-id>/grooming.md`. Run `/team-groom <ticket>` first — planning without acceptance criteria produces unreliable plans." Do not proceed.
+
+Also check for `.team/work/<ticket-id>/research.md`:
+- If it exists: read it for codebase context, risks, and open questions.
+- If it does not exist: note that research was not done. Proceed — research is informative, not required for planning.
+
+### Work directory
+
+Create `.team/work/<ticket-id>/` if it does not exist.
+
 ### Instructions
 
 Read the project context:
@@ -66,7 +84,21 @@ Cross-reference the plan's file list against `.team/SPRINT.md`:
 
 ### Output
 
-Save the plan locally (do not commit to git):
+Save the plan to `.team/work/<ticket-id>/plan.md`.
+
+The file must begin with this frontmatter:
+
+```
+---
+ticket: <ticket-id>
+phase: plan
+date: <YYYY-MM-DD>
+author: <developer>
+preset: <preset value from config, or "none">
+---
+```
+
+Plan format:
 
 ```
 # Implementation Plan: <ticket-id>

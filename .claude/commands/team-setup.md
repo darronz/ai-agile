@@ -4,6 +4,10 @@ Audit this repository's configuration against recommended guardrails for AI-assi
 
 ### Instructions
 
+### Preset resolution
+
+Read `.team/config.yaml`. If a `preset` field is set, verify `.team/presets/<preset>.yaml` exists. Report an error if the preset file is missing.
+
 Read `.team/config.yaml` to understand the team's configured methodology and policies.
 
 Then check each of the following and report the status:
@@ -14,6 +18,8 @@ Then check each of the following and report the status:
 - [ ] `.team/CONVENTIONS.md` exists
 - [ ] `.team/SPRINT.md` exists
 - [ ] `.github/PULL_REQUEST_TEMPLATE.md` exists
+- [ ] `.team/presets/` directory exists with at least one preset file
+- [ ] `preset` field in `.team/config.yaml` references an existing preset file
 
 **Branch protection (check via `gh` CLI if available, otherwise advise manually)**
 - [ ] Main branch has branch protection enabled
@@ -36,12 +42,17 @@ Then check each of the following and report the status:
 **Commit hygiene**
 - [ ] `.gitignore` excludes agent working directories (`.planning/`, local state files)
 - [ ] Commit signing configured (advisory, not required)
+- [ ] `.team/work/` is NOT listed in `.gitignore` (work artifacts should be committed)
 
 **PR template**
 - [ ] Template includes ticket reference field
 - [ ] Template includes AI-assistance disclosure
 - [ ] Template includes scope confirmation
 - [ ] Template includes testing instructions section
+
+**Command installation**
+- [ ] `.claude/commands/` directory exists
+- [ ] All eight team commands are present: team-research, team-groom, team-plan, team-execute, team-review, team-validate, team-retro, team-setup
 
 ### Output format
 

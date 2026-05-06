@@ -4,6 +4,24 @@ Self-review the current branch before raising a PR. This catches problems before
 
 ### Instructions
 
+### Preset resolution
+
+Read `.team/config.yaml`. If a `preset` field is set, load `.team/presets/<preset>.yaml` and merge its values as defaults — any value explicitly set in `config.yaml` overrides the preset. Use the resolved config for all quality thresholds and tooling commands.
+
+### Prerequisite check
+
+Check for `.team/work/<ticket-id>/grooming.md`:
+- If it exists: read it for acceptance criteria (used in section 1 of the review).
+- If it does not exist: warn "No groomed ticket found — skipping acceptance criteria coverage check." Proceed with all other review checks.
+
+Check for `.team/work/<ticket-id>/plan.md`:
+- If it exists: read it for planned file scope (used in section 2 of the review).
+- If it does not exist: warn "No implementation plan found — skipping scope compliance check." Proceed with all other review checks.
+
+### Work directory
+
+`.team/work/<ticket-id>/` should already exist. If it does not, create it.
+
 Read the project context:
 - `CLAUDE.md` for coding standards and architecture
 - `.team/config.yaml` for policies and quality thresholds
@@ -107,6 +125,20 @@ Date: <date>
 
 ## Findings for backlog
 <Out-of-scope issues from FINDINGS.md, formatted as potential tickets>
+```
+
+Save the review report to `.team/work/<ticket-id>/review.md`.
+
+The file must begin with this frontmatter:
+
+```
+---
+ticket: <ticket-id>
+phase: review
+date: <YYYY-MM-DD>
+author: <developer>
+preset: <preset value from config, or "none">
+---
 ```
 
 ### Gate check

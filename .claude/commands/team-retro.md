@@ -4,6 +4,10 @@ Pull metrics from git history for the current or most recent sprint. Format them
 
 ### Instructions
 
+### Preset resolution
+
+Read `.team/config.yaml`. If a `preset` field is set, load `.team/presets/<preset>.yaml` and merge its values as defaults. The retro command primarily uses git history and sprint data, but the resolved config is needed for identifying AI-assisted metrics (the `ai_commit_prefix` field).
+
 Read `.team/SPRINT.md` for the sprint scope and assignments.
 
 Determine the sprint date range from the SPRINT.md or ask the developer for the start and end dates.

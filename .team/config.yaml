@@ -3,6 +3,17 @@
 # and adapts its behaviour accordingly. Edit it to match your reality.
 
 # ─────────────────────────────────────────────────────────────────────
+# Stack preset
+# ─────────────────────────────────────────────────────────────────────
+preset: node-typescript
+# Loads tooling defaults from .team/presets/<name>.yaml
+# Any value you set below overrides the preset.
+# Remove this line to configure everything manually.
+#
+# Available presets: node-typescript, python, go
+# See .team/presets/README.md for creating custom presets.
+
+# ─────────────────────────────────────────────────────────────────────
 # Development methodology
 # ─────────────────────────────────────────────────────────────────────
 methodology: tdd
@@ -82,11 +93,20 @@ gates:
 # ─────────────────────────────────────────────────────────────────────
 # Test and quality configuration
 # ─────────────────────────────────────────────────────────────────────
-test_framework: vitest           # or jest, pytest, go test, rspec, etc.
-e2e_framework: playwright        # or cypress, selenium, none
-coverage_threshold: 80           # Minimum % coverage for new code
-lint_command: "npm run lint"     # Command the agent runs to check style
-type_check_command: "npm run typecheck"  # Leave empty if not applicable
+# These values have defaults from the preset above. Override here
+# if your project differs from the preset's assumptions.
+#
+# To see what the current preset provides, check:
+#   .team/presets/<preset-name>.yaml
+
+# test_framework: vitest         # Override preset's test runner
+# test_command: "npm test"       # Override preset's test command
+# e2e_framework: playwright      # Set to 'none' to disable E2E checks.
+#                                # The agent will skip E2E-related checks
+#                                # in /team-review and /team-validate.
+# coverage_threshold: 80         # Override preset's minimum %
+# lint_command: "npm run lint"   # Override preset's linter
+# type_check_command: "npm run typecheck"  # Set to "" to disable
 
 # ─────────────────────────────────────────────────────────────────────
 # Dependency policy
@@ -112,9 +132,9 @@ docs:
 # ─────────────────────────────────────────────────────────────────────
 # Feature flags
 # ─────────────────────────────────────────────────────────────────────
+# Set feature_flags to false to disable. The agent will not wrap
+# incomplete work behind flags.
 feature_flags: true
-# If true and branching is trunk-based, agent wraps incomplete
-# features behind flags. Specify your flag system below.
 flag_system: environment          # environment / launchdarkly / custom
 
 # ─────────────────────────────────────────────────────────────────────
@@ -122,6 +142,11 @@ flag_system: environment          # environment / launchdarkly / custom
 # ─────────────────────────────────────────────────────────────────────
 # Files the agent should never modify without explicit developer approval
 # during the session. These are checked in /team-review.
+#
+# The preset provides stack-specific defaults (e.g., package-lock.json
+# for Node, poetry.lock for Python). Setting protected_paths here
+# REPLACES the preset's list entirely. To extend the preset's list,
+# copy it here and add your entries.
 protected_paths:
   - ".github/"
   - ".team/config.yaml"
@@ -129,11 +154,11 @@ protected_paths:
   - "docker-compose*.yml"
   - "Dockerfile*"
   - ".env*"
-  - "package-lock.json"       # Indirect changes via dependency adds are OK
+  - "package-lock.json"
   - "infrastructure/"
 
 # ─────────────────────────────────────────────────────────────────────
-# Performance and accessibility (if applicable)
+# Performance and accessibility (optional — remove section if N/A)
 # ─────────────────────────────────────────────────────────────────────
 # frontend:
 #   bundle_budget_kb: 250

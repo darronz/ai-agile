@@ -4,6 +4,20 @@ Refine a ticket into a well-scoped, implementable unit of work with clear accept
 
 ### Instructions
 
+### Preset resolution
+
+Read `.team/config.yaml`. If a `preset` field is set, load `.team/presets/<preset>.yaml` and merge its values as defaults — any value explicitly set in `config.yaml` overrides the preset. Use the resolved config for all tooling references throughout this command.
+
+### Prerequisite check
+
+Check for `.team/work/<ticket-id>/research.md`:
+- If it exists: read it and use the findings to inform grooming.
+- If it does not exist: warn that full research was not done. Run a lightweight codebase scan of the affected areas inline. Note in the output that research was skipped.
+
+### Work directory
+
+Create `.team/work/<ticket-id>/` if it does not exist.
+
 Read the project context:
 - `CLAUDE.md` for architecture and standards
 - `.team/config.yaml` for methodology (this affects how acceptance criteria are written)
@@ -65,7 +79,21 @@ Based on the complexity assessment:
 
 ### Output
 
-Produce the refined ticket as a markdown file. If the team uses a tracker (Jira, Linear, GitHub Issues), format it so it can be pasted in.
+Save the refined ticket to `.team/work/<ticket-id>/grooming.md`.
+
+The file must begin with this frontmatter:
+
+```
+---
+ticket: <ticket-id>
+phase: grooming
+date: <YYYY-MM-DD>
+author: <developer>
+preset: <preset value from config, or "none">
+---
+```
+
+The groomed ticket can also be pasted into the team's tracker (Jira, Linear, GitHub Issues) for discussion.
 
 ```
 # <ticket-id>: <ticket-title>

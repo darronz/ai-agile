@@ -4,6 +4,20 @@ Generate and run validation checks against the acceptance criteria for a complet
 
 ### Instructions
 
+### Preset resolution
+
+Read `.team/config.yaml`. If a `preset` field is set, load `.team/presets/<preset>.yaml` and merge its values as defaults — any value explicitly set in `config.yaml` overrides the preset. Use the resolved config for test frameworks and quality thresholds.
+
+### Prerequisite check
+
+Check for `.team/work/<ticket-id>/grooming.md`:
+- If it exists: read it for acceptance criteria (the primary input for validation).
+- If it does not exist: warn "No groomed ticket found — generating test scenarios from code analysis instead of acceptance criteria. Results may not align with intended behavior." Proceed with code-based analysis.
+
+### Work directory
+
+`.team/work/<ticket-id>/` should already exist. If it does not, create it.
+
 Read the project context:
 - `CLAUDE.md` for architecture context
 - `.team/config.yaml` for test frameworks and methodology
@@ -100,6 +114,20 @@ Date: <date>
 
 ## Recommendation
 <Is this ready for UAT? What should be addressed first?>
+```
+
+Save the validation report to `.team/work/<ticket-id>/validation.md`.
+
+The file must begin with this frontmatter:
+
+```
+---
+ticket: <ticket-id>
+phase: validation
+date: <YYYY-MM-DD>
+author: <developer>
+preset: <preset value from config, or "none">
+---
 ```
 
 ### Important

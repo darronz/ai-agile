@@ -1,0 +1,16 @@
+# Go defaults
+# These values are used when config.yaml has: preset: go
+# Override any value by setting it directly in config.yaml.
+
+test_framework: go test
+test_command: "go test ./..."
+e2e_framework: none
+coverage_threshold: 80
+lint_command: "golangci-lint run"
+type_check_command: ""
+
+protected_paths:
+  - "go.sum"
+  - ".env*"
+  - "Dockerfile*"
+  - "docker-compose*.yml"

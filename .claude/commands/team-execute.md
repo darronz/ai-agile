@@ -8,6 +8,20 @@ Execute the implementation plan for the current ticket. This is where code gets 
 - You are on the correct feature branch (not main, not develop)
 - The plan has passed its gate check (reviewed if required by config)
 
+### Preset resolution
+
+Read `.team/config.yaml`. If a `preset` field is set, load `.team/presets/<preset>.yaml` and merge its values as defaults — any value explicitly set in `config.yaml` overrides the preset. Use the resolved config for all tooling commands (test, lint, type check) throughout execution.
+
+### Prerequisite check
+
+Check for `.team/work/<ticket-id>/plan.md`:
+- If it exists: read it for the step-by-step implementation plan.
+- If it does NOT exist: **STOP.** Tell the developer: "No implementation plan found at `.team/work/<ticket-id>/plan.md`. Run `/team-plan <ticket>` first." Do not proceed.
+
+### Work directory
+
+`.team/work/<ticket-id>/` should already exist from the planning phase. If findings are discovered during execution, write them to `.team/work/<ticket-id>/findings.md`.
+
 ### Instructions
 
 Read the project context:
@@ -110,7 +124,21 @@ When all steps are executed:
 
 ### Findings file
 
-If any out-of-scope issues were discovered during execution, save them locally:
+If any out-of-scope issues were discovered during execution, save them to `.team/work/<ticket-id>/findings.md`.
+
+The file must begin with this frontmatter:
+
+```
+---
+ticket: <ticket-id>
+phase: findings
+date: <YYYY-MM-DD>
+author: <developer>
+preset: <preset value from config, or "none">
+---
+```
+
+Findings format:
 
 ```
 # Findings: <ticket-id>

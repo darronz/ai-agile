@@ -1,0 +1,83 @@
+# manifest.yaml
+#
+# Maps skill files to their target location in the adopting repo.
+# Today: reference for manual setup. Tomorrow: input for a CLI installer.
+#
+# action: copy     — copy as-is to the target repo
+# action: template — copy, then customize before use
+# action: skip     — repo meta-file, do not copy to target
+
+files:
+  # ── Workflow and conventions ──────────────────────────────────────
+
+  - source: .team/config.yaml
+    action: template
+    note: "Edit preset, methodology, branching, and gates to match your team"
+
+  - source: .team/CONVENTIONS.md
+    action: copy
+    note: "Review and adjust definition of done, commit format, review checklist"
+
+  - source: .team/BACKLOG.md
+    action: copy
+    note: "Replace with tracker integration if using Jira/Linear/GitHub Issues"
+
+  - source: .team/SPRINT.md
+    action: copy
+    note: "Edit at sprint planning"
+
+  - source: .team/presets/
+    action: copy
+    note: "Stack presets for config.yaml. Unused presets are inert."
+
+  # ── Claude Code commands ──────────────────────────────────────────
+
+  - source: .claude/commands/team-research.md
+    action: copy
+
+  - source: .claude/commands/team-groom.md
+    action: copy
+
+  - source: .claude/commands/team-plan.md
+    action: copy
+
+  - source: .claude/commands/team-execute.md
+    action: copy
+
+  - source: .claude/commands/team-review.md
+    action: copy
+
+  - source: .claude/commands/team-validate.md
+    action: copy
+
+  - source: .claude/commands/team-retro.md
+    action: copy
+
+  - source: .claude/commands/team-setup.md
+    action: copy
+
+  # ── GitHub integration ────────────────────────────────────────────
+
+  - source: .github/PULL_REQUEST_TEMPLATE.md
+    action: copy
+
+  - source: .github/branch-protection.md
+    action: copy
+    note: "Reference doc — apply settings manually in GitHub/GitLab UI"
+
+  # ── Template ──────────────────────────────────────────────────────
+
+  - source: CLAUDE.md.example
+    action: template
+    note: "Rename to CLAUDE.md and fill in project-specific sections"
+
+  # ── Repo meta (do not copy to target) ─────────────────────────────
+
+  - source: README.md
+    action: skip
+
+  - source: LICENSE
+    action: skip
+
+  - source: manifest.yaml
+    action: skip

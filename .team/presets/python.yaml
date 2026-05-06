@@ -1,0 +1,17 @@
+# Python defaults
+# These values are used when config.yaml has: preset: python
+# Override any value by setting it directly in config.yaml.
+
+test_framework: pytest
+test_command: "pytest"
+e2e_framework: none
+coverage_threshold: 80
+lint_command: "ruff check ."
+type_check_command: "mypy ."
+
+protected_paths:
+  - "poetry.lock"
+  - "requirements*.txt"
+  - ".env*"
+  - "Dockerfile*"
+  - "docker-compose*.yml"
